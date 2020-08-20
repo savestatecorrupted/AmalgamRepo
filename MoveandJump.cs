@@ -21,7 +21,7 @@ public class MoveandJump : MonoBehaviour
     private float jumpTimeCounter;
     public float jumpTime;
     private bool isJumping;
-    private bool isFalling;
+    public float threshold;
 
     private Animator anim;
 
@@ -35,6 +35,10 @@ public class MoveandJump : MonoBehaviour
     {
         moveInput = Input.GetAxisRaw("Horizontal");
         rb.velocity = new Vector2(moveInput * speed, rb.velocity.y);
+
+        if (transform.position.y < threshold)
+            transform.position = new Vector2(-6.22f, -2.48f);
+
     }
 
     private void Update()
@@ -97,12 +101,10 @@ public class MoveandJump : MonoBehaviour
         //animation trigger for falling
         if (rb.velocity.y < -0.1)
         {
-            isFalling = true;
             anim.SetBool("isFalling", true);
         }
         else
         {
-            isFalling = false;
             anim.SetBool("isFalling", false);
         }
     }
